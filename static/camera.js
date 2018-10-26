@@ -1,15 +1,20 @@
 var TIMER_SLEEP_TIME_MS = 100;
 var stream_flag = false;
 var timer;
+var context = $("#stream_canvas").get(0).getContext("2d");
 
-function get_image(data){
-    $.get("get_image/", function(data){
-        $("#test").attr("src", "data:image/png;base64," + data);
+
+function get_image(){
+    $.get("get_image/", function(img_data){
+        var rawData = decode(img_data, {useTArray: true,
+                                        colorTransform: false});
+        var imgData = context.createImageData(480,360);
+        imgData.data.set(rawData.data);
+        context.putImageData(imgData, 0, 0, 0, 0, 480, 360);
     })
 }
 
 function start_stop_stream(){
-    console.log("PUSHED!");
     if (!stream_flag) {
 //    TODO: if timer frequency is too high than it blocks the stop call! why?
         timer = setInterval(get_image, TIMER_SLEEP_TIME_MS);
