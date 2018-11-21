@@ -38,12 +38,10 @@ class CaptureBase:
 
 class WebCameraCapture(CaptureBase):
     def open(self):
-        print("ENTER")
         self._cap = cv2.VideoCapture(0)
         return
 
     def close(self):
-        print("EXIT")
         self._cap.release()
 
     def get_image(self):
