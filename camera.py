@@ -1,5 +1,4 @@
 import platform
-import queue
 
 import numpy as np
 
@@ -7,8 +6,6 @@ if platform.system() == "Windows":
     import cv2
 else:
     import picamera
-    
-image_queue = queue.Queue(maxsize=1)
 
 
 class CaptureBase:
