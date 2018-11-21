@@ -21,22 +21,29 @@ class CaptureBase:
     def get_image(self):
         return
 
+    def open(self):
+        return
+
+    def close(self):
+        return
+
     def __enter__(self):
+        self.open()
         return
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
         return
-
-    open = __enter__
-    close = __exit__
 
 
 class WebCameraCapture(CaptureBase):
-    def __enter__(self):
+    def open(self):
+        print("ENTER")
         self._cap = cv2.VideoCapture(0)
         return
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def close(self):
+        print("EXIT")
         self._cap.release()
 
     def get_image(self):
@@ -48,13 +55,13 @@ class WebCameraCapture(CaptureBase):
 
 
 class PiCameraCapture(CaptureBase):
-    def __enter__(self):
+    def open(self):
         self._cap = picamera.PiCamera()
         self._cap.resolution = self.image_size
         self._cap.framerate = self.frame_rate
         return
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def close(self):
         self._cap.close()
         return
 

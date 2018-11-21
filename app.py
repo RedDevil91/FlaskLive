@@ -17,4 +17,6 @@ def get_image():
 
 
 if __name__ == '__main__':
+    capture.open()
     app.run(debug=True, host='0.0.0.0')
+    capture.close()
